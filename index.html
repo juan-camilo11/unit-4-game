@@ -31,28 +31,28 @@
             <div class="col-md-2">
                 <figure class="figure">
                     <figcaption class="figure-caption text-center" id="fighter-0-name"></figcaption>
-                    <img src="" width=200px height=200px class="figure-img rounded fighter-selector" id="fighter-0-pic">
+                    <img src="" width=80px height=80px class="figure-img rounded fighter-selector" id="fighter-0-pic">
                     <figcaption class="figure-caption text-center" id="fighter-0-health"></figcaption>
                 </figure>
             </div>
             <div class="col-md-2">
                 <figure class="figure">
                     <figcaption class="figure-caption text-center" id="fighter-1-name"></figcaption>
-                    <img src="" width=200px height=200px class="figure-img rounded fighter-selector" id="fighter-1-pic">
+                    <img src="" width=80px height=80px class="figure-img rounded fighter-selector" id="fighter-1-pic">
                     <figcaption class="figure-caption text-center" id="fighter-1-health"></figcaption>
                 </figure>
             </div>
             <div class="col-md-2">
                 <figure class="figure">
                     <figcaption class="figure-caption text-center" id="fighter-2-name"></figcaption>
-                    <img src="" width=200px height=200px class="figure-img rounded fighter-selector" id="fighter-2-pic">
+                    <img src="" width=80px height=80px class="figure-img rounded fighter-selector" id="fighter-2-pic">
                     <figcaption class="figure-caption text-center" id="fighter-2-health"></figcaption>
                 </figure>
             </div>
             <div class="col-md-2">
                 <figure class="figure">
                     <figcaption class="figure-caption text-center" id="fighter-3-name"></figcaption>
-                    <img src="" width=200px height=200px class="figure-img rounded fighter-selector" id="fighter-3-pic">
+                    <img src="" width=80px height=80px class="figure-img rounded fighter-selector" id="fighter-3-pic">
                     <figcaption class="figure-caption text-center" id="fighter-3-health"></figcaption>
                 </figure>
             </div>
@@ -60,13 +60,13 @@
         </div>
         <div class="row">
         
-                    <h4>YOUR FIGHTER</h4>
+                    <h5>YOUR FIGHTER</h5>
                     <div class="col-md-3" id="chosen-fighter">
 
                     </div>
         </div>
         <div class="row opponent-selection-row">
-            <h4>ENEMIES</h4>
+            <h5>ENEMIES</h5>
             <div class="col-md-2">
                 <figure class="figure enemy-selector" id="enemy0">
                     <figcaption class="figure-caption text-center" id="enemy-0-name"></figcaption>
@@ -92,14 +92,14 @@
             <!-- i can just make the new figures in the javascript file -->
         </div>
         <div class="row" id="the-arena">
-            <h4>ARENA</h4>
+            <h5>ARENA</h5>
            
                 <!--the attack button will go here. It will be hidden until both fighters are selected -->
                 <!-- structure will be a hamburger, attacker, attack button, defender -->
         </div>
         <div class="row">
             <div class="col-md-2">
-                    <button id="attack-button" class="btn btn-secondary"><h1>Attack</h1></button>
+                    <button id="attack-button" class="btn btn-secondary btn-sm">Attack</button>
             </div>
 
         </div>
@@ -113,6 +113,30 @@
                 </figure>
         
             </div>
+        </div>
+        <div class="row">
+            <div id="attacker-info">
+
+            </div>
+        </div>
+        <div class="row">
+            <div id="defender-info">
+
+            </div>
+        </div>
+        <div class="row">
+            <div id="endgame-info">
+                
+            </div>
+
+        </div>
+            <!-- need to include a restart button in this div that is hidden until you win or lose -->
+        <div class="row">
+            <div>
+                <button id="reset-button" class="btn btn-secondary d-none btn-sm">Reset</button>
+            </div>
+        </div>
+
 
         </div>
         

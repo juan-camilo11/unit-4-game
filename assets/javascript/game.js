@@ -46,6 +46,17 @@ $(document).ready(function() {
 
     var chosenEnemy = 0;
 
+    //going to use this variable to keep track of the original attack
+    //power so it can be added with each attack
+    var scaling = 0; 
+
+    //use this as a place holder for fighters so objects arent changed
+    var fighterHealth = 0;
+
+    //going to use this as a place hodler for defender health so
+    //object is not modified for reset
+    var defenderHealth = 0;
+
 
     //load stats to character select
 
@@ -95,13 +106,16 @@ $(document).ready(function() {
             chosenFighterElement4.addClass("figure-caption text-center fighter-HP");
             chosenFighterElement2.text(chosenFighter.name);
             chosenFighterElement3.attr("src", chosenFighter.picture);
-            chosenFighterElement3.attr("width", "200px");
-            chosenFighterElement3.attr("height", "200px");
+            chosenFighterElement3.attr("width", "80px");
+            chosenFighterElement3.attr("height", "80px");
             chosenFighterElement4.text(chosenFighter.HP);
             chosenFighterElement1.append(chosenFighterElement2);
             chosenFighterElement1.append(chosenFighterElement3);
             chosenFighterElement1.append(chosenFighterElement4);
             $("#chosen-fighter").append(chosenFighterElement1);
+
+            scaling = chosenFighter.attack;
+            fighterHealth = chosenFighter.HP;
 
 
             //this variable will make sure the enemies are located in the
@@ -118,8 +132,8 @@ $(document).ready(function() {
                     $("#enemy" + enemyCounter).attr("index",i);
                     $("#enemy-" + enemyCounter + "-name").text(characterArray[i].name);
                     $("#enemy-" + enemyCounter + "-picture").attr("src", characterArray[i].picture);
-                    $("#enemy-" + enemyCounter + "-picture").attr("width", "200px");
-                    $("#enemy-" + enemyCounter + "-picture").attr("height", "200px");
+                    $("#enemy-" + enemyCounter + "-picture").attr("width", "80px");
+                    $("#enemy-" + enemyCounter + "-picture").attr("height", "80px");
                     $("#enemy-" + enemyCounter + "-health").text(characterArray[i].HP);
                     
                     enemyCounter ++;
@@ -154,12 +168,14 @@ $(document).ready(function() {
             chosenEnemy = $(this).attr("index");
             chosenEnemy = parseInt(chosenEnemy);
             chosenEnemy = characterArray[chosenEnemy];
+
+            defenderHealth = chosenEnemy.HP;
   
             $("#defender-name").text(chosenEnemy.name);
             $("#defender-picture").attr("src", chosenEnemy.picture);
-            $("#defender-picture").attr("width", "200px");
-            $("#defender-picture").attr("height", "200px");
-            $("#defender-health").text(chosenEnemy.HP);
+            $("#defender-picture").attr("width", "80px");
+            $("#defender-picture").attr("height", "80px");
+            $("#defender-health").text(defenderHealth);
 
 
             };
@@ -167,6 +183,72 @@ $(document).ready(function() {
 
             
 
+
+        
+
+
+
+
+    });
+
+    $("#attack-button").on("click", function(){
+
+        //this if statement ensures both fighters are still alive 
+        //and also checks to see that both a fighter and an enemy were chosen
+        if((chosenEnemy !== 0 && chosenFighter !== 0) && (defenderHealth > 0 && fighterHealth > 0)) {
+
+            fighterHealth = fighterHealth - chosenEnemy.counterAttack;
+            defenderHealth = defenderHealth - chosenFighter.attack;
+            $("#attacker-info").text("you dealt " + chosenFighter.attack + " damage on " + chosenEnemy.name + " ");
+            $("#defender-info").text(chosenEnemy.name + " dealt " + chosenEnemy.counterAttack + " damage through a counter attack");
+
+            chosenFighter.attack = chosenFighter.attack + scaling;
+
+            $("#defender-health").text(defenderHealth);
+            $(".fighter-HP").text(fighterHealth);
+
+            if(fighterHealth < 0) {
+                $("#endgame-info").text("you lose");
+                $("#reset-button").removeClass("d-none");
+                //put in code that displays the restart button
+
+            }
+
+            if(defenderHealth < 0) {
+
+                enemiesDefeated ++;
+                if(enemiesDefeated === 3){
+
+                    chosenEnemy = 0;
+                    $("#defender-name").text("");
+                    $("#defender-picture").attr("src","");
+                    $("#defender-picture").attr("width","");
+                    $("#defender-picture").attr("height","");
+                    $("#defender-health").text("");
+                    $("#attacker-info").text("");
+                    $("#defender-info").text("");
+                    $("#endgame-info").text("you win");
+                    $("#reset-button").removeClass("d-none");
+                    
+
+                    //put in code that displays the restart button
+                } else {
+                    chosenEnemy = 0;
+                    $("#defender-name").text("");
+                    $("#defender-picture").attr("src","");
+                    $("#defender-picture").attr("width","");
+                    $("#defender-picture").attr("height","");
+                    $("#defender-health").text("");
+                    $("#attacker-info").text("");
+                    $("#defender-info").text("");
+
+
+                }
+                
+
+            }
+
+        }
 
         
 
