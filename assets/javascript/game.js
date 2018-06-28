@@ -104,7 +104,7 @@ $(document).ready(function() {
             var chosenFighterElement4 = $("<figcaption>");
             chosenFighterElement1.addClass("figure");
             chosenFighterElement2.addClass("figure-caption text-center fighter-name");
-            chosenFighterElement3.addClass("figure-img");
+            chosenFighterElement3.addClass("figure-img rounded");
             chosenFighterElement4.addClass("figure-caption text-center fighter-HP");
             chosenFighterElement2.text(chosenFighter.name);
             chosenFighterElement3.attr("src", chosenFighter.picture);
