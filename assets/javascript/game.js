@@ -1,12 +1,11 @@
 
 //create objects for each fighter including the following attributes: HP,attack,counter attack, name, and picture
-$(document).ready(function() {
     var Mario = {
         name: "Mario",
         picture: "./assets/images/Mario.jpg",
         HP: 150,
         attack: 7,
-        counterAttack: 8,
+        counterAttack: 19,
 
     };
 
@@ -24,7 +23,7 @@ $(document).ready(function() {
         picture: "./assets/images/Fox.jpg",
         HP: 130,
         attack: 8,
-        counterAttack: 9,
+        counterAttack: 22,
 
     };
 
@@ -50,6 +49,9 @@ $(document).ready(function() {
     //power so it can be added with each attack
     var scaling = 0; 
 
+    //place holder to increase fighters attck without altering the objects
+    var fighterAttack = 0;
+
     //use this as a place holder for fighters so objects arent changed
     var fighterHealth = 0;
 
@@ -62,7 +64,7 @@ $(document).ready(function() {
 
     var characterArray = [];
     characterArray.push(Mario,DonkeyKong,Fox,Samus);
-
+$(document).ready(function() {
     //loop displays all avaliable characters to the screen
     for(var i = 0; i < characterArray.length; i++) {
         $("#fighter-" + i + "-name").text(characterArray[i].name);
@@ -116,6 +118,7 @@ $(document).ready(function() {
 
             scaling = chosenFighter.attack;
             fighterHealth = chosenFighter.HP;
+            fighterAttack = chosenFighter.attack;
 
 
             //this variable will make sure the enemies are located in the
@@ -164,7 +167,11 @@ $(document).ready(function() {
 
     
         if(chosenEnemy === 0) {
-            $(this).hide();
+            
+            //this is hiding all of the elements in the opponent selector row
+            //need to figure out a way to set all of the elements in the figure
+            //to empty elements instead of hiding everything
+            $(this).html("");
             chosenEnemy = $(this).attr("index");
             chosenEnemy = parseInt(chosenEnemy);
             chosenEnemy = characterArray[chosenEnemy];
@@ -198,27 +205,46 @@ $(document).ready(function() {
         if((chosenEnemy !== 0 && chosenFighter !== 0) && (defenderHealth > 0 && fighterHealth > 0)) {
 
             fighterHealth = fighterHealth - chosenEnemy.counterAttack;
-            defenderHealth = defenderHealth - chosenFighter.attack;
-            $("#attacker-info").text("you dealt " + chosenFighter.attack + " damage on " + chosenEnemy.name + " ");
+            defenderHealth = defenderHealth - fighterAttack;
+            $("#attacker-info").text("you dealt " + fighterAttack + " damage on " + chosenEnemy.name + " ");
             $("#defender-info").text(chosenEnemy.name + " dealt " + chosenEnemy.counterAttack + " damage through a counter attack");
 
-            chosenFighter.attack = chosenFighter.attack + scaling;
+            fighterAttack = fighterAttack + scaling;
 
             $("#defender-health").text(defenderHealth);
             $(".fighter-HP").text(fighterHealth);
 
-            if(fighterHealth < 0) {
+            if(fighterHealth <= 0) {
                 $("#endgame-info").text("you lose");
                 $("#reset-button").removeClass("d-none");
+
+                for(var i = 0; i < 3; i++) {
+                    $("#enemy" + i).html("");
+                    
+            
+                };
+
+                enemiesDefeated = 0;
+                chosenEnemy = 0;
+                $("#defender-name").text("");
+                $("#defender-picture").attr("src","");
+                $("#defender-picture").attr("width","");
+                $("#defender-picture").attr("height","");
+                $("#defender-health").text("");
+                $("#attacker-info").text("");
+                $("#defender-info").text("");
+
+
                 //put in code that displays the restart button
 
-            }
+            } else 
 
-            if(defenderHealth < 0) {
+            if(defenderHealth <= 0) {
 
                 enemiesDefeated ++;
                 if(enemiesDefeated === 3){
-
+                    
+                    enemiesDefeated = 0;
                     chosenEnemy = 0;
                     $("#defender-name").text("");
                     $("#defender-picture").attr("src","");
@@ -253,6 +279,32 @@ $(document).ready(function() {
         
 
 
+
+
+    });
+
+    $("#reset-button").on("click", function(){
+
+        scaling = 0;
+        $("#endgame-info").text("");
+        $("#reset-button").addClass("d-none");
+        $("#chosen-fighter").html("");
+        chosenFighter = 0;
+
+        $("#fighter-selection-row").show();
+
+        for(var i = 0; i < characterArray.length; i++) {
+            $("#fighter-" + i + "-name").text(characterArray[i].name);
+            $("#fighter-" + i + "-pic").attr("src",characterArray[i].picture);
+            $("#fighter-" + i + "-health").text(characterArray[i].HP);
+    
+        };
+
+        for(var i = 0; i < 3; i++) {
+            $("#enemy" + i).append("<figcaption class='figure-caption text-center' id='enemy-" + i + "-name'></figcaption><img src='' class='figure-img rounded' id='enemy-" + i + "-picture'><figcaption class='figure-caption text-center' id='enemy-" + i + "-health'></figcaption>");
+            
+    
+        };
 
 
     });
